@@ -12,6 +12,10 @@ apt-get update
 echo "DPkg::Post-Invoke { \"dpkg -V proxmox-widget-toolkit | grep -q '/proxmoxlib\.js$'; if [ \$? -eq 1 ]; then { echo 'Removing subscription nag from UI...'; sed -i '/data.status/{s/\!//;s/Active/NoMoreNagging/}' /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js; }; fi\"; };" > /etc/apt/apt.conf.d/no-nag-script
 apt --reinstall install proxmox-widget-toolkit
 
+# In order to be able to manipulate the network configuration, is needed to install the ifupdown2 package 
+
+apt install ifupdown2 -y
+
 #Install A dark theme for the Proxmox Web UI : commands from Weilbyte/PVEDiscordDark
 
 wget https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.py
